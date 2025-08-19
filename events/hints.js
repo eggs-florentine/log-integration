@@ -6,15 +6,11 @@ const {MongoClient, ServerApiVersion} = require('mongodb');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {        
-                    console.log('Received message!')
 
         if (message.channel.name === 'command-log' && message.embeds[0] !== 'null' && message.author.id !== '894443342484606986') {
-              console.log('Received message!')
-            console.log(message);
             const command = message.embeds[0].data.description.split('`')[1];
             const moderator = message.embeds[0].data.description.split(' ')[0].split(':')[0];
             if (command.startsWith(':log hint')) {
-              console.log('Received message!')
                 const client = new MongoClient(uri, {
                     serverApi: {
                       version: ServerApiVersion.v1,
@@ -31,8 +27,8 @@ module.exports = {
                 const doc = await col.findOne({key: key}, null);
                 if (!doc) return;
                 const hint = doc.value;
-                // TODO: integrate erlc api to send hint!
-const apiresponse = await fetch('https://api.policeroleplay.community/v1/server/command', {
+
+                const apiresponse = await fetch('https://api.policeroleplay.community/v1/server/command', {
     method: 'POST',
     headers: {
       "server-key": apiKey,
@@ -62,7 +58,7 @@ const business = command.split(' ').splice(2,100).join(' ');
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      "command": ":h " + business + " is open!",
+      "command": ":h 🔔 " + business + " is open! Stop by.",
     })
 });
 
