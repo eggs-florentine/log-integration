@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ThreadAutoArchiveDuration, RoleSelectMenuBuilder, PermissionsBitField, ActionRowBuilder, ActionRow, ComponentType } = require('discord.js');
 const fs = require('fs').promises;
-const { mongodbPW } = require('../config.json');
-const uri =`"mongodb+srv://suggestions:${mongodbPW}@rose-vfms.k338rsp.mongodb.net/?retryWrites=true&w=majority&appName=rose-vfms"`;
+const {MongoClient, ServerApiVersion} = require('mongodb');
+const { mongodbPW } = require('./../../config.json');
+const uri =`mongodb+srv://suggestions:${mongodbPW}@rose-vfms.k338rsp.mongodb.net/?retryWrites=true&w=majority&appName=rose-vfms`;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,6 +24,8 @@ module.exports = {
         await client.connect();
         const db = client.db('suggestions-bot');
         const col = db.collection('suggestions');
+        console.log(col);
+        console.log(db);
         await col.insertOne({key: interaction.options.getString("key"), value: interaction.options.getString('msg')}).then(() => {
             interaction.editReply({ephemeral: true, content: `✅ **@${interaction.member.displayName},** approved message successfully registered to the database.`})
         })

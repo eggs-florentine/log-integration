@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ThreadAutoArchiveDuration, RoleSelectMenuBuilder, PermissionsBitField, ActionRowBuilder, ActionRow, ComponentType } = require('discord.js');
 const fs = require('fs').promises;
-const { mongodbPW } = require('../config.json');
-const uri =`"mongodb+srv://suggestions:${mongodbPW}@rose-vfms.k338rsp.mongodb.net/?retryWrites=true&w=majority&appName=rose-vfms"`;
+const { mongodbPW } = require('./../../config.json');
+const {MongoClient, ServerApiVersion} = require('mongodb');
+const uri =`mongodb+srv://suggestions:${mongodbPW}@rose-vfms.k338rsp.mongodb.net/?retryWrites=true&w=majority&appName=rose-vfms`;
 
 module.exports = {
     data: new SlashCommandBuilder()

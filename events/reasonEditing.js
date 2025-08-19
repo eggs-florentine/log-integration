@@ -2,12 +2,18 @@ let { Events, EmbedBuilder, ChannelType, PermissionsBitField, StringSelectMenuBu
 
 module.exports = {
     name: Events.MessageCreate,
-    async execute(interaction) {        
-        if (interaction.channel.name === 'command-log') {
-            const message = interaction.message;
-            const command = message.content.embeds[0].description.split('`')[1];
-            const moderator = message.content.embeds[0].description.split(' ')[0].split(':')[0];
-            if (command.startsWith(':log latest')) {
+    async execute(message) {        
+        if (message.channel.name === 'command-log') {
+            //
+            let command;
+            let moderator;
+            try {
+             command = message.embeds[0].data.description.split('`')[1];
+             moderator = message.embeds[0].data.description.split(' ')[0].split(':')[0];
+            } catch {
+                
+            }
+            if (command && command.startsWith(':log latest')) {
                 const logs = await interaction.guild.channels.cache.find(c => c.name === 'game-mod-log');
                 const rawReason = command.split(' ')
                 // ok, so we start with :log latest blah blah blah
@@ -26,7 +32,7 @@ module.exports = {
                         .setFooter({text: 'Reason edited in-game by ' + moderator})
                     
                     const targetRow = targetLog.components[0];
-                    message.edit({content: '', embeds: [editMsg], components: [targetRow]});
+                    targetLog.edit({content: '', embeds: [editMsg], components: [targetRow]});
 
                 }
 
