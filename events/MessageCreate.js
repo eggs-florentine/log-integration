@@ -1,5 +1,5 @@
 let { Events, EmbedBuilder, ChannelType, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonStyle, ButtonBuilder, ActionRowBuilder } = require('discord.js');
-const { mongodbPW } = require('../config.json');
+const { mongodbPW, apiKey } = require('../config.json');
 const uri =`mongodb+srv://suggestions:${mongodbPW}@rose-vfms.k338rsp.mongodb.net/?retryWrites=true&w=majority&appName=rose-vfms`;
 const {MongoClient, ServerApiVersion} = require('mongodb');
 
@@ -35,7 +35,7 @@ module.exports = {
 const apiresponse = await fetch('https://api.policeroleplay.community/v1/server/command', {
     method: 'POST',
     headers: {
-      "server-key": "ABVwMcSVygfOeuvuPnPm-lEiZfvzZMEUaXRxLtOWzcYAJrGmSjsKKTYBWSCuq",
+      "server-key": apiKey,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
